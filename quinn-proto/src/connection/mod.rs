@@ -697,9 +697,6 @@ impl Connection {
         if self.state.is_drained() {
             return Ok(());
         }
-        if !self.is_multipath_negotiated() {
-            return Err(ClosePathError::MultipathNotNegotiated);
-        }
         if self.abandoned_paths.contains(&path_id)
             || Some(path_id) > self.max_path_id()
             || !self.paths.contains_key(&path_id)

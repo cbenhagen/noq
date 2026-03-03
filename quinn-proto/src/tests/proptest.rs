@@ -301,22 +301,11 @@ fn regression_invalid_key2() {
     let prefix = "regression_invalid_key2";
     let seed = [0u8; 32];
     let interactions = vec![
-        TestOp::CloseConn {
-            side: Side::Client,
-            error_code: 0,
-        },
+        TestOp::CloseConn(Side::Client, 0),
         TestOp::AdvanceTime,
-        TestOp::Drive { side: Side::Client },
-        TestOp::OpenPath {
-            side: Side::Client,
-            status: PathStatus::Available,
-            addr_idx: 0,
-        },
-        TestOp::ClosePath {
-            side: Side::Client,
-            path_idx: 0,
-            error_code: 0,
-        },
+        TestOp::Drive(Side::Client),
+        TestOp::OpenPath(Side::Client, PathStatus::Available, 0),
+        TestOp::ClosePath(Side::Client, 0, 0),
     ];
 
     let _guard = subscribe();
